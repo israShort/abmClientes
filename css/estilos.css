@@ -1,0 +1,22 @@
+main h1 a, main h1 a:hover {
+    color: black;
+    text-decoration-line: none;
+}
+
+tbody a i {
+    color: white;
+    font-size: 13px;
+}
+
+tbody a .fa-edit {
+    background-color: rgb(0, 170, 170);
+}
+
+tbody a .fa-trash-alt {
+    background-color: rgb(197, 48, 48);
+}
+
+tbody td a, tbody td a:hover {
+    color: black;
+    text-decoration-line: none;
+}
