@@ -6,16 +6,8 @@
         $aClientes = array();
     }
 
-    if (isset($_GET["id"]) && ($_GET["id"] >= 0) && isset($_GET["do"]) && isset($_GET["do"]) == "eliminar") {
-        if (file_exists("files/".$aClientes[$_GET["id"]]["imagen"])) {
-            unlink("files/".$aClientes[$_GET["id"]]["imagen"]);
-        }
-        unset($aClientes[$_GET["id"]]);
-        file_put_contents("archivo.txt", json_encode($aClientes));
-        header("Location: index.php");
-    }
-
     if ($_POST) {
+
         $dni = $_POST["txtDNI"];
         $nombre = $_POST["txtNombre"];
         $telefono = $_POST["txtTelefono"];
@@ -32,20 +24,30 @@
         }
 
         if (isset($_GET["id"]) && ($_GET["id"] >= 0)) {
-            $nombreImagenAnt = $aClientes[$_GET["id"]]["imagen"];
-            if (($nombreImagen != "") && ($nombreImagenAnt != $nombreImagen)) {
-                unlink("files/".$nombreImagenAnt);
-            } else {
-                $nombreImagen = $aClientes[$_GET["id"]]["imagen"];
-            }
+            if (isset($_POST["btnGuardar"])) {
+                $nombreImagenAnt = $aClientes[$_GET["id"]]["imagen"];
+                if (($nombreImagen != "") && ($nombreImagenAnt != $nombreImagen)) {
+                    unlink("files/".$nombreImagenAnt);
+                } else {
+                    $nombreImagen = $aClientes[$_GET["id"]]["imagen"];
+                }
 
-            $aClientes[$_GET["id"]] = array(
-                "dni" => $dni,
-                "nombre" => $nombre,
-                "telefono" => $telefono,
-                "correo" => $correo,
-                "imagen" => $nombreImagen
-            );
+                $aClientes[$_GET["id"]] = array(
+                    "dni" => $dni,
+                    "nombre" => $nombre,
+                    "telefono" => $telefono,
+                    "correo" => $correo,
+                    "imagen" => $nombreImagen
+                );
+            } else if (isset($_POST["btnEliminar"])) {
+                if (isset($_GET["do"]) && isset($_GET["do"]) == "eliminar") {
+                    if (file_exists("files/".$aClientes[$_GET["id"]]["imagen"])) {
+                        unlink("files/".$aClientes[$_GET["id"]]["imagen"]);
+                    }
+                    print_r($_GET["id"]);
+                    unset($aClientes[$_GET["id"]]);
+                }
+            }
         } else {
             //Cliente nuevo
             $aClientes[] = array(
@@ -99,8 +101,8 @@
                     </div>
                     <div class="mb-3">
                         Archivo adjunto:<input type="file" class="form-control" name="archivo" id="archivo" class="d-block">
-                        <button type="submit" class="btn btn-primary mt-3">Guardar</button>
-                        <button type="button" class="btn btn-danger mt-3">Eliminar</button>
+                        <button type="submit" class="btn btn-primary mt-3" id="btnGuardar" name="btnGuardar">Guardar</button>
+                        <button type="submit" class="btn btn-danger mt-3" id="btnEliminar" name="btnEliminar">Eliminar</button>
                     </div>
                 </form>
             </div>
