@@ -125,17 +125,19 @@ if ($_POST) {
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($aClientes as $index => $cliente) {
-                            echo "<tr>";
-                            echo "<td><img src=files/" . $cliente["imagen"] . " class='img-thumbnail'></td>";
-                            echo "<td>" . $cliente["dni"] . "</td>";
-                            echo "<td>" . strtoupper($cliente["nombre"]) . "</td>";
-                            echo "<td><a href=mailto:" . $cliente["correo"] . ">" . $cliente["correo"] . "</a></td>";
-                            echo "<td class=text-center>";
-                            echo "<a href='index.php?id=" . $index . "'><i class='fas fa-edit rounded-circle p-2'></i></a>";
-                            echo "<a href='index.php?id=" . $index . "&do=eliminar'><i class='fas fa-trash-alt rounded-circle p-2 m-1'></i></a>";
-                            echo "</td>";
-                            echo "</tr>";
+                        if (isset($aClientes)) {
+                            foreach ($aClientes as $index => $cliente) {
+                                echo "<tr>";
+                                echo "<td><img src=files/" . $cliente["imagen"] . " class='img-thumbnail'></td>";
+                                echo "<td>" . $cliente["dni"] . "</td>";
+                                echo "<td>" . strtoupper($cliente["nombre"]) . "</td>";
+                                echo "<td><a href=mailto:" . $cliente["correo"] . ">" . $cliente["correo"] . "</a></td>";
+                                echo "<td class=text-center>";
+                                echo "<a href='index.php?id=" . $index . "'><i class='fas fa-edit rounded-circle p-2'></i></a>";
+                                echo "<a href='index.php?id=" . $index . "&do=eliminar'><i class='fas fa-trash-alt rounded-circle p-2 m-1'></i></a>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
                         }
                         ?>
                     </tbody>
